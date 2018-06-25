@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" style="font-size: 34.7222px; overflow: auto;">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>移动分站</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/info.css">
+<link
+	href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="https://cdn.bootcss.com/Swiper/4.0.7/css/swiper.min.css"
+	rel="stylesheet">
+<link href="css/mescroll.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="font/iconfont.css">
+<script src="https://cdn.bootcss.com/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://cdn.bootcss.com/Swiper/4.0.7/js/swiper.min.js"></script>
+<script src="js/mescroll.min.js"></script>
+<script src="layer/layer.js"></script>
+<link rel="stylesheet" href="layer/theme/default/layer.css"
+	id="layuicss-layer">
+</head>
+<body style="overflow: auto;">
+	<script src="js/session.js"></script>
+	<script src="js/cookie.js"></script>
+	<div class="list-wrap">
+		<div class="banner">
+			<div
+				class="swiper-container swiper-banner swiper-container-horizontal swiper-container-ios">
+				<div class="swiper-wrapper">
+					<!--
+                    	作者：carlos
+                    	时间：2018-05-16
+                    	描述：动态更新的幻灯图片
+                    -->
+				</div>
+			</div>
+		</div>
+		<ul class="list-detail list" id="comment_list">
+					<!--
+                    	作者：carlos
+                    	时间：2018-05-16
+                    	描述：动态更新的产品列表
+                    -->
+		</ul>
+		<center>
+		<div style="width: 100%;height: 1.6rem;margin: 0.5rem 0;color: darkgray;">------------本产品由<span id="bottom_title"></span>提供------------</div>
+		</center>
+	</div>
+	<!-- style="display:none;" -->
+	<div class="filter" style="display: none;">
+		<div class="register-box">
+			<span class="closed">X</span>
+			<p style="font-size: 0.35rem; color: #f34d4d; display: none;"
+				class="jiance">检测到您尚未登录</p>
+			<p>手机验证码</p>
+			<form class="form2">
+				<input type="text" name="phone" placeholder="请输入手机号" class="r-phone">
+				<div class="check">
+					<input type="text" class="checknum" placeholder="请输入验证码">
+					<input type="hidden" class="returnNum" id="returnNum" value="" />
+					<input
+						type="button" class="getnum" value="获取验证码">
+				</div>
+				<input type="button" value="验证" class="btn-register">
+			</form>
+		</div>
+	</div>
+	<script>
+	//从URL当中获取分站id
+	function GetQueryString(name) {
+		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
+		var r = window.location.search.substr(1).match(reg);
+		if (r != null)
+			return unescape(r[2]);
+		return null;
+	}
+
+	$(document).ready(function() {
+		console.log(GetQueryString("pcId"));
+		$.ajax({
+			url : "http://192.168.1.96:8080/OuyiManagerSystem/web/getdata",
+			type : 'post',
+			dataType : 'json',
+			data : {
+				pcId : GetQueryString("pcId")
+			},
+			success : function(data) {
+				console.log("请求成功！"+data.msg);
+				$("title").html(data.pc); 
+				$('#bottom_title').text(data.pc);
+				$.each(data.sList, function(i,item){    
+					console.log(item);
+				    $(".swiper-wrapper").append('<div class="swiper-slide">'+
+				    '<a style="display: block; width: 100%; height: 100%;">'+
+				    '<img src="'+item.stitleImg+'"></a></div>'); 
+				});
+				
+				$.each(data.pList, function(i,item){
+					console.log(item);
+					if(item.ptitle!=null && item.pstate==1){
+						$("#comment_list").append('<li id=\'comment\' style="background: #fff url(\'img/hot.jpg\') no-repeat top right; background-size: 0.95rem 1rem;" data-pid="'+item.id+'">'+
+				    '<a link="'+item.purl+'"><div class="top"><div class="imgbox"><img src="'+item.ptitleImg+'" alt=""></div>'+
+				    '<div class="title"><p class="tit">'+item.ptitle+'</p><p class="intro">'+item.premark+'</p>'+
+				    '<p class="money" style="font-size: 3.2vw; color: #737373; float: left;">最高额度: <span> '+item.ped+'</span></p>'+
+				    '<p class="people" style="float: right; font-size: 3.2vw; color: #737373;"><span>'+item.pnum+'人</span>已申请</p></div></div>'+
+				    '<div class="down"><p class="fh hs"><span class="">'+item.pfdsj+'</span> 放贷	</p><p class="hs lx">贷款天利息</p><p class="hong">'+item.plx+'</p>'+
+				    '<p class="term hs">借款期限 <span class=""> '+item.pjkqx+'</span>	</p></div></a></li>'); 
+					}    
+				});
+				
+				$.each(data.pList, function(i,item){
+					if(item.ptitle!=null && item.pstate==0){
+						$("#comment_list").append('<li id=\'comment\' style="background: #fff url(\'img/hot.jpg\') no-repeat top right; background-size: 0.95rem 1rem;" data-pid="'+item.id+'">'+
+				    '<a link="'+item.purl+'"><div class="top"><div class="imgbox"><img src="'+item.ptitleImg+'" alt=""></div>'+
+				    '<div class="title"><p class="tit">'+item.ptitle+'</p><p class="intro">'+item.premark+'</p>'+
+				    '<p class="money" style="font-size: 3.2vw; color: #737373; float: left;">最高额度: <span> '+item.ped+'</span></p>'+
+				    '<p class="people" style="float: right; font-size: 3.2vw; color: #737373;"><span>'+item.pnum+'人</span>已申请</p></div></div>'+
+				    '<div class="down"><p class="fh hs"><span class="">'+item.pfdsj+'</span> 放贷	</p><p class="hs lx">贷款天利息</p><p class="hong">'+item.plx+'</p>'+
+				    '<p class="term hs">借款期限 <span class=""> '+item.pjkqx+'</span>	</p></div></a></li>'); 
+					}  
+				});
+			}
+		})
+
+	}); 
+	</script><!-- 用Ajax在后台获取数据并同步到前端 -->
+	
+	<script>
+		$(function() {
+			document.documentElement.style.fontSize = document.documentElement.clientWidth
+					/ 1080 * 100 + 'px';
+
+			var link = null;
+			var pid = 0;
+			var user = null;
+			
+			
+			$("#comment_list").on("click","#comment", function(){
+				link = $(this).find('a').attr("link");
+				pid = $(this).data('pid');
+				
+				//判断用户是否注册
+				$.ajax({
+					url : "http://192.168.1.96:8080/OuyiManagerSystem/web/issaveduser",
+					type : 'post',
+					dataType : 'json',
+					data : {
+						pid:pid
+					},
+					success : function(data) {
+						if (data.result == 1) {
+							layer.msg("正在进行页面跳转！")
+							location.href=link;
+						} else {
+							$(".filter").show();
+							$("html").css("overflow", "hidden");
+							$("body").css("overflow", "hidden");
+						}
+					}
+				})
+			})
+			
+		/*	幻灯区域的点击事件
+			$(".swiper-wrapper").on("click",".swiper-slide a",function() {
+				link = $(this).find('a').attr("link");
+				pid = $(this).data('pid');
+
+				//判断用户是否注册
+				$.ajax({
+					url : "http://192.168.1.96:8080/OuyiManagerSystem/web/issaveduser",
+					type : 'post',
+					dataType : 'json',
+					data : {},
+					success : function(data) {
+						if (data.result == 0) {
+							$(".filter").show();
+							$("html").css("overflow", "hidden");
+							$("body").css("overflow", "hidden");
+						}
+					}
+				})
+			})
+		*/
+
+			window.addEventListener('pageshow', function(e) {
+				if (e.persisted) {
+					window.location.reload()
+				}
+			})
+			window
+					.addEventListener(
+							'pagehide',
+							function(e) {
+								var $body = $(document.body);
+								$body.children().remove();
+								// 要等到回调函数完成，用户按返回才执行script标签的代码
+								setTimeout(function() {
+									$body
+											.append("<script type='text/javascript'>window.location.reload();<\/script>");
+								});
+							});
+
+
+			var swiper = new Swiper('.swiper-banner', {
+				observer:true,  
+				observeParents:true,  
+				loop : true,
+				autoplay : {
+					disableOnInteraction : false,
+				}
+			})
+
+			$(".getnum").on("click", function() {
+				var phone = $('.r-phone').val();
+				if (/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(phone)) {
+					var second = 120;
+					var timer = setInterval(function() {
+						second--;
+						$('.getnum').attr({"disabled":"disabled"});
+						if (second != 0) {
+							$('.getnum').css({
+								"border-color" : "#999",
+								"color" : "#fff"
+							}).val("重新发送" + second + "s");
+							$('.reg-sure').removeClass('reg-active');
+						} else {
+							$('.getnum').val("短信获取").css({
+								"border-color" : "#ec7655",
+								"color" : "#ec7655"
+							});
+							$('.getnum').removeAttr("disabled");
+							clearInterval(timer);
+						}
+					}, 1000)
+					$.ajax({
+						url : "http://192.168.1.96:8080/OuyiManagerSystem/web/sendandsave",
+						type : 'post',
+						dataType : 'json',
+						data : {
+							op : 'sendcode',
+							phone : phone
+						},
+						success : function(data) {
+							if (data.result == 1) {
+								layer.msg(data.msg)
+								$("#returnNum").val(data.code);
+							} else {
+								layer.msg(data.msg)
+								clearInterval(timer);
+							}
+						}
+					})
+
+				} else {
+					layer.msg("您输入的号码有误，请重新输入！")
+				}
+				;
+			});
+			
+			$('.btn-register').click(function() {
+				var phone = $('.r-phone').val();
+				var code = $('.checknum').val();
+				var checkcode=$("#returnNum").val();
+				if (code==checkcode) {
+					layer.msg("验证成功！")
+					$.ajax({
+						url : "http://192.168.1.96:8080/OuyiManagerSystem/web/sendandsave",
+						type : 'post',
+						dataType : 'json',
+						data : {
+							op : 'save',
+							phone : phone,
+							pid : pid
+						},
+						success : function(data) {
+							if(data.url!=null){
+								layer.msg("正在进行页面跳转！")
+								location.href=data.url;
+							}
+							$(".filter").hide();
+							$("html").css("overflow", "auto");
+							$("body").css("overflow", "auto");
+						}
+					})
+				} else{
+					layer.msg("您输入的验证码不匹配，请重新输入！")
+				}
+			})
+			
+			$(".closed").on("click", function() {
+				$(".filter").hide();
+				$("html").css("overflow", "auto");
+				$("body").css("overflow", "auto");
+			})
+			document.getElementById("bottom_title")
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+*{margin: 0;padding: 0;box-sizing: border-box;}
+html,body{width: 100%;height: 100%;background: #f8f8f8;position: relative;}
+.list-wrap{width: 100%;height: 100%;}
+.banner{width: 100%;height: 6rem;}
+.banner img{width: 100%;height: 100%;}
+.list{width: 100%;background: #f2f2f2;}
+.list li{width: 100%;height: 3.25rem;box-sizing: border-box;margin-top: 0.18rem;}
+.list li a{display: block;width: 100%;height: 100%;padding: 0.3rem 0.35rem 0 0.4rem;}
+.list li .top{width: 100%;height: 2.2rem;border-bottom: 1px solid #ccc;}
+.list li .top .imgbox{width: 1.75rem;height: 100%;padding-top: 0.15rem;float: left;}
+.list li .top .imgbox img{width: 1.75rem;height: 1.75rem;border-radius: 2.8vw;box-shadow: 0.3vw 0.3vw #ccc;}
+.list li .title{float: left;width: 8.2rem;height: 100%;padding: 0 0 0 4.6vw;}
+.list li p{margin: 0;margin-bottom: 0.2rem;}
+.title .tit{font-size: 3.6vw;font-weight: bold;color: #333;}
+.title .intro{color: #333;font-size: 0.36rem;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+.title .money{color: #585858;font-size: 2.7vw;}
+.title span{color: #ff324a;}
+.list li .down{width: 100%;height: 0.75rem;line-height: 0.75rem;}
+.down p{float: left;font-size: 0.28rem;}
+.down .term{float: right;}
+.down .hong{color: #c05e6b;}
+.down .hs{color:#737373;}
+.lx{margin-left: 1.5rem!important;}
+
+.filter{position: fixed;background: rgba(0, 0, 0, .8);z-index: 5;top: 0;left: 0;width: 100%;height: 100%;overflow: auto;display: none;top: 0;
+left: 0;}
+.register-box{width: 85%;margin: 30% auto;background: rgba(255, 255, 255, 1);padding: 0 0.5rem 0;border-radius: 0.2rem;}
+.register-box p{text-align: center;margin: 0 0 0.5rem;font-size: 0.54rem;}
+form input{width: 100%;height: 1.2rem;margin-bottom: 0.4rem;border: none;padding-left: 1.3rem;position: relative;background: #eee url("../img/extention.png")no-repeat top left;background-size: 0.72rem 2.72rem;}
+form .btn-register{margin: 0.4rem 0 0.6rem;background: #f34d4d;color: #fff;font-size: 0.4rem;padding-left: 0;border-radius: 0.1rem;}
+.r-phone{background-position: 0.2rem 0.1rem;}
+.check .checknum{width: 70%;float: left;background-position: 0.2rem -1.7rem;}
+.check .getnum{width: 28%;float: right;padding-left: 0;font-size: 0.32rem;color: #fff;background: #f34d4d;border-radius: 0.1rem;}
+.btnn{float: left;height: 100%;}
+.btnn a{display: block;width: 1.8rem;height: 0.7rem;line-height: 0.7rem;text-align: center;color: #fff;background: #e02e24;font-size: 0.36rem;margin: 0.22rem 0 0 0.2rem;border-radius: 0.1rem;}
+
+.jump{width: 100%;height: 100%;position: fixed;z-index: 10;background: #fff;display: none;top: 0;left: 0;}
+.bao{height: 1.5rem;margin-top: 8rem;}
+.bao p{text-align: center;}
+.text{font-size: 0.66rem;}
+.rest-time{color: #f34d4d;font-size: 0.8rem;}
+.ajump a{font-size: 0.45rem;color: #c5c5c5;text-decoration: underline;}
+.closed{display: block;font-size: 20px;text-align: right;}
