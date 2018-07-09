@@ -5,7 +5,7 @@
 <meta name="viewport"
 	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>移动分站</title>
+<title></title>
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/info.css">
 <link
@@ -46,7 +46,8 @@
                     -->
 		</ul>
 		<center>
-		<div style="width: 100%;height: 1.6rem;margin: 0.5rem 0;color: darkgray;">------------本产品由<span id="bottom_title"></span>提供------------</div>
+		<div style="width: 100%;height: 1.6rem;margin: 0.5rem 0;color: darkgray;">广东欧一控股有限公司<br>粤ICP备17080558号-1 
+		<br>到款时间根据客户实际情况而定<br>投资有风险，借贷需谨慎</div>
 		</center>
 	</div>
 	<!-- style="display:none;" -->
@@ -90,7 +91,6 @@
 			success : function(data) {
 				console.log("请求成功！"+data.msg);
 				$("title").html(data.pc); 
-				$('#bottom_title').text(data.pc);
 				$.each(data.sList, function(i,item){    
 					console.log(item);
 				    $(".swiper-wrapper").append('<div class="swiper-slide">'+
@@ -100,7 +100,7 @@
 				
 				$.each(data.pList, function(i,item){
 					console.log(item);
-					if(item.ptitle!=null && item.pstate==1){
+					if(item.ptitle!=null && item.pactivate==1 && item.pstate==1){
 						$("#comment_list").append('<li id=\'comment\' style="background: #fff url(\'img/hot.jpg\') no-repeat top right; background-size: 0.95rem 1rem;" data-pid="'+item.id+'">'+
 				    '<a link="'+item.purl+'"><div class="top"><div class="imgbox"><img src="'+item.ptitleImg+'" alt=""></div>'+
 				    '<div class="title"><p class="tit">'+item.ptitle+'</p><p class="intro">'+item.premark+'</p>'+
@@ -112,7 +112,7 @@
 				});
 				
 				$.each(data.pList, function(i,item){
-					if(item.ptitle!=null && item.pstate==0){
+					if(item.ptitle!=null && item.pactivate==1 && item.pstate==0){
 						$("#comment_list").append('<li id=\'comment\' style="background: #fff url(\'img/hot.jpg\') no-repeat top right; background-size: 0.95rem 1rem;" data-pid="'+item.id+'">'+
 				    '<a link="'+item.purl+'"><div class="top"><div class="imgbox"><img src="'+item.ptitleImg+'" alt=""></div>'+
 				    '<div class="title"><p class="tit">'+item.ptitle+'</p><p class="intro">'+item.premark+'</p>'+
@@ -295,7 +295,6 @@
 				$("html").css("overflow", "auto");
 				$("body").css("overflow", "auto");
 			})
-			document.getElementById("bottom_title")
 		})
 	</script>
 </body>
